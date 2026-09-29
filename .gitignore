@@ -66,3 +66,7 @@ coverage/
 secrets/
 credentials.json
 service-account.json
+
+# local push logs
+push*.log
+push*.sh.bak
