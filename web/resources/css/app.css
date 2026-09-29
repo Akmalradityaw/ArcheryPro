@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    /* Mencegah padding vertikal tailwind forms memotong teks di dalam DaisyUI select */
+    select.select {
+        padding-top: 0;
+        padding-bottom: 0;
+        line-height: normal;
+    }
+}
+
