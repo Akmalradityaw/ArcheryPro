@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dokumentasi Resmi ArcheryPro v1.0.0</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: {
+              50: '#E8F5E9',
+              100: '#C8E6C9',
+              200: '#A5D6A7',
+              300: '#81C784',
+              400: '#66BB6A',
+              500: '#4CAF50',
+              600: '#2E7D32',
+              700: '#1B5E20',
+              800: '#14532D',
+              900: '#0B3D1A',
+            },
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+            mono: ['SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .sidebar-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidebar-scroll::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 3px;
+    }
+
+    .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+  <!-- ============ TOPBAR ============ -->
+  <header
+    class="fixed top-0 left-0 right-0 h-16 bg-white/90 backdrop-blur-md border-b border-slate-200 z-50 flex items-center justify-between px-4 sm:px-6">
+    <div class="flex items-center gap-3 min-w-0">
+      <!-- Hamburger (mobile only) -->
+      <button id="menuToggle" aria-label="Buka menu navigasi"
+        class="lg:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-forest-700 transition-colors shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <a href="#overview" class="flex items-center gap-2 sm:gap-3 group min-w-0">
+        <div
+          class="w-9 h-9 rounded-lg bg-forest-600 flex items-center justify-center text-white text-sm font-black shadow-sm group-hover:bg-forest-700 transition-colors shrink-0">
+          AP
+        </div>
+        <span class="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 truncate">ArcheryPro</span>
+        <span
+          class="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider text-forest-700 bg-forest-50 border border-forest-200 px-2 py-1 rounded-full shrink-0">v1.0.0</span>
+      </a>
+    </div>
+
+    <div
+      class="hidden md:flex items-center gap-2 text-xs font-semibold text-slate-600 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-lg max-w-md truncate">
+      <span class="relative flex h-2 w-2 shrink-0">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-600"></span>
+      </span>
+      <span class="truncate">Local Workspace • c:\xampp\htdocs\Non-Production\ArcheryPro</span>
+    </div>
+  </header>
+
+  <!-- ============ OVERLAY (mobile) ============ -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/50 z-40 hidden lg:hidden"></div>
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside id="sidebar" class="sidebar-scroll fixed top-0 lg:top-16 bottom-0 left-0 w-72 bg-white border-r border-slate-200 overflow-y-auto px-4 py-6 z-50 lg:z-40
+           -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+    <!-- Close button (mobile only) -->
+    <div class="flex items-center justify-between mb-4 lg:hidden">
+      <span class="text-sm font-extrabold text-slate-800">Navigasi</span>
+      <button id="menuClose" aria-label="Tutup menu navigasi"
+        class="inline-flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="space-y-6">
+      <div>
+        <p class="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-2 px-3">Pengantar</p>
+        <a href="#overview"
+          class="nav-link block px-3 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-slate-100 hover:text-forest-700 transition-colors mb-0.5">1.
+          Ringkasan Proyek</a>
+        <a href="#arsitektur"
+          class="nav-link block px-3 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-slate-100 hover:text-forest-700 transition-colors mb-0.5">2.
+          Arsitektur &amp; Struktur</a>
+        <a href="#akun-demo"
+          class="nav-link block px-3 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-slate-100 hover:text-forest-700 transition-colors mb-0.5">3.
+          Akun Demo Resmi</a>
+      </div>
+
+      <div>
+        <p class="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-2 px-3">Fitur Sistem</p>
+        <a href="#fitur-web"
+          class="nav-link block px-3 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-slate-100 hover:text-forest-700 transition-colors mb-0.5">4.
+          Web Portal (Laravel)</a>
+        <a href="#fitur-mobile"
+          class="nav-link block px-3 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-slate-100 hover:text-forest-700 transition-colors mb-0.5">5.
+          Mobile App (Expo)</a>
+        <a href="#scoring-keypad"
+          class="nav-link block px-3 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-slate-100 hover:text-forest-700 transition-colors mb-0.5">6.
+          Penilaian &amp; Offline Draft</a>
+        <a href="#analisis-performa"
+          class="nav-link block px-3 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-slate-100 hover:text-forest-700 transition-colors mb-0.5">7.
+          Performa &amp; Stabilitas</a>
+      </div>
+
+      <div>
+        <p class="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-2 px-3">API &amp; Teknis</p>
+        <a href="#api-v1"
+          class="nav-link block px-3 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-slate-100 hover:text-forest-700 transition-colors mb-0.5">8.
+          Spesifikasi REST API v1</a>
+        <a href="#panduan-lokal"
+          class="nav-link block px-3 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-slate-100 hover:text-forest-700 transition-colors mb-0.5">9.
+          Cara Menjalankan Sistem</a>
+        <a href="#troubleshooting"
+          class="nav-link block px-3 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-slate-100 hover:text-forest-700 transition-colors mb-0.5">10.
+          Masalah &amp; Solusi Bug</a>
+        <a href="#design-system"
+          class="nav-link block px-3 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-slate-100 hover:text-forest-700 transition-colors mb-0.5">11.
+          Standar Desain Solid</a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main class="pt-16 lg:pl-72">
+    <div class="px-4 sm:px-6 lg:px-10 py-8 lg:py-10 max-w-5xl mx-auto">
+
+      <!-- Hero Banner -->
+      <section id="overview"
+        class="scroll-mt-24 bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 lg:p-8 mb-8 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+          <div class="min-w-0">
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 mb-2">Dokumentasi Resmi
+              ArcheryPro</h1>
+            <p class="text-sm text-slate-500 font-medium">Platform Panahan Digital Terpadu • Versi 1.0.0</p>
+          </div>
+          <div
+            class="hidden lg:flex items-center gap-2 text-xs font-bold text-forest-700 bg-forest-50 border border-forest-200 px-3 py-2 rounded-lg shrink-0">
+            <span class="w-2 h-2 rounded-full bg-forest-500"></span>
+            Production Ready
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 leading-relaxed max-w-3xl mb-6">
+          Platform panahan digital terpadu berbasis Laravel 10 dan React Native Expo SDK 57. Menyediakan pencatatan skor
+          tembakan lapangan secara langsung (<em>live field scoring</em>), evaluasi teknik pelatih, analisis kestabilan
+          rilis (standar deviasi), dan papan peringkat publik.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span
+            class="text-[11px] font-bold px-3 py-1 rounded-md bg-forest-50 text-forest-700 border border-forest-200">Laravel
+            10.x</span>
+          <span
+            class="text-[11px] font-bold px-3 py-1 rounded-md bg-forest-50 text-forest-700 border border-forest-200">React
+            Native 0.86 (Expo 57)</span>
+          <span
+            class="text-[11px] font-bold px-3 py-1 rounded-md bg-forest-50 text-forest-700 border border-forest-200">Sanctum
+            Bearer Token</span>
+          <span
+            class="text-[11px] font-bold px-3 py-1 rounded-md bg-blue-50 text-blue-700 border border-blue-200">Paginasi
+            Ketat 10 Data</span>
+          <span
+            class="text-[11px] font-bold px-3 py-1 rounded-md bg-amber-50 text-amber-700 border border-amber-200">Solid
+            Green System (No Gradient)</span>
+          <span
+            class="text-[11px] font-bold px-3 py-1 rounded-md bg-blue-50 text-blue-700 border border-blue-200">Offline
+            Draft Storage</span>
+        </div>
+      </section>
+
+      <!-- Metrics Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-12">
+        <div
+          class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-forest-300 transition-all">
+          <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mb-1">Versi Rilis</p>
+          <p class="text-2xl font-extrabold text-forest-600 mb-1">1.0.0</p>
+          <p class="text-xs text-slate-500">Stabil &amp; siap pengujian lokal</p>
+        </div>
+        <div
+          class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-forest-300 transition-all">
+          <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mb-1">Test Suite Backend</p>
+          <p class="text-2xl font-extrabold text-forest-600 mb-1">41 / 41 PASS</p>
+          <p class="text-xs text-slate-500">143 assertions terverifikasi</p>
+        </div>
+        <div
+          class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-forest-300 transition-all">
+          <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mb-1">REST API v1</p>
+          <p class="text-2xl font-extrabold text-forest-600 mb-1">14 Endpoint</p>
+          <p class="text-xs text-slate-500">Sanctum bearer token protected</p>
+        </div>
+        <div
+          class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-forest-300 transition-all">
+          <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mb-1">Standar Paginasi</p>
+          <p class="text-2xl font-extrabold text-forest-600 mb-1">10 Data / Hal</p>
+          <p class="text-xs text-slate-500">Seragam di web portal &amp; mobile</p>
+        </div>
+      </div>
+
+      <!-- Section 2 -->
+      <section id="arsitektur" class="scroll-mt-24 mb-12">
+        <h2
+          class="text-xl sm:text-2xl font-bold text-slate-900 border-b-2 border-slate-200 pb-2 mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-6 bg-forest-500 rounded-full shrink-0"></span>
+          2. Arsitektur &amp; Struktur Direktori
+        </h2>
+        <p class="text-sm text-slate-600 mb-4">
+          Sistem mengadopsi pola <em>split workspace</em> yang memisahkan backend Laravel 10 di direktori <code
+            class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">web/</code> dan frontend
+          mobile React Native di direktori <code
+            class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">mobile/</code>:
+        </p>
+        <pre
+          class="bg-slate-900 text-slate-100 p-4 rounded-lg text-[11px] sm:text-xs font-mono leading-relaxed overflow-x-auto border border-slate-800"><code>ArcheryPro/
+├── web/                                 # BACKEND LARAVEL 10 &amp; WEB UI
+│   ├── app/
+│   │   ├── Http/
+│   │   │   ├── Controllers/Api/V1/      # REST API Controllers (Auth, Sesi, Skor, Atlet, Public)
+│   │   │   └── Requests/StoreSkorRequest.php # Validasi input skor &amp; prepareForValidation()
+│   │   ├── Models/                      # Model Eloquent (User, Atlet, Sesi, SesiLatihan, Skor, dll.)
+│   │   ├── Services/SkorService.php     # Business logic multi-atlet &amp; handling withTrashed()
+│   │   └── Support/ApiResponse.php      # Trait standardizer respon JSON &amp; paginasi 10 item
+│   ├── config/cors.php                  # Konfigurasi Cross-Origin Resource Sharing
+│   ├── database/seeders/DemoDataSeeder.php # Seeder data demo resmi Banyuwangi
+│   ├── routes/api.php                   # Routing REST API v1 (/api/v1/...)
+│   └── tests/                           # 41 Unit &amp; Feature Test cases
+│
+└── mobile/                              # FRONTEND MOBILE (REACT NATIVE EXPO SDK 57)
+    ├── App.js                           # Entry point, AuthProvider &amp; Splash screen
+    └── src/
+        ├── constants/theme.js           # Solid Forest Green (#2E7D32, #1B5E20, #4CAF50)
+        ├── context/AuthContext.js       # Global auth state &amp; auto re-verify
+        ├── services/api.js              # REST client, dynamic host detection, offline drafts
+        ├── screens/
+        │   ├── LoginScreen.js           # Form login + demo chips + server URL config
+        │   ├── DashboardScreen.js       # Ringkasan aktivitas, alert evaluasi baru, sesi terkini
+        │   ├── SesiLatihanScreen.js     # Filter tab, paginasi 10 item, detail sesi &amp; leaderboard
+        │   ├── InputSkorScreen.js       # Keypad tembakan (X..M), multi-atlet, draft offline
+        │   ├── PerformaScreen.js        # Moving average 4-sesi, stabilitas SD, riwayat 10-item, badges
+        │   └── ProfilScreen.js          # Detail atlet, toggle privasi publik, uji koneksi API
+        └── navigation/AppNavigator.js   # Bottom navigation responsif berbasis peran (Pelatih vs Atlet)</code></pre>
+      </section>
+
+      <!-- Section 3 -->
+      <section id="akun-demo" class="scroll-mt-24 mb-12">
+        <h2
+          class="text-xl sm:text-2xl font-bold text-slate-900 border-b-2 border-slate-200 pb-2 mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-6 bg-forest-500 rounded-full shrink-0"></span>
+          3. Akun Demo &amp; Kredensial Resmi (v1.0.0)
+        </h2>
+        <p class="text-sm text-slate-600 mb-4">
+          Data akun pengujian ini telah terpasang resmi di database lokal melalui <code
+            class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">DemoDataSeeder.php</code>:
+        </p>
+
+        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm mb-6">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm min-w-[720px]">
+              <thead class="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Peran Akun
+                  </th>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Nama Lengkap
+                  </th>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Username</th>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Password</th>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Deskripsi /
+                    Afiliasi</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800 whitespace-nowrap">Pelatih (Utama)</td>
+                  <td class="px-4 py-3 text-slate-600 whitespace-nowrap">Bambang Sutrisno</td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">pelatih1</code>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">password123</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500">Pelatih Kepala Wilayah Rogojampi</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800 whitespace-nowrap">Pelatih (Pendamping)</td>
+                  <td class="px-4 py-3 text-slate-600 whitespace-nowrap">Sri Wahyuni</td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">pelatih2</code>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">password123</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500">Pelatih Pendamping Wilayah Genteng</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800 whitespace-nowrap">Petugas Scoring</td>
+                  <td class="px-4 py-3 text-slate-600 whitespace-nowrap">Andi Kurnia</td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">scoring1</code>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">password123</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500">Petugas Pencatat Skor Lapangan</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800 whitespace-nowrap">Atlet 1 (Utama)</td>
+                  <td class="px-4 py-3 text-slate-600 whitespace-nowrap">Rizky Pratama</td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">rizky1</code>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">password123</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500">Kategori Recurve (SMAN 1 Rogojampi)</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800 whitespace-nowrap">Atlet 2</td>
+                  <td class="px-4 py-3 text-slate-600 whitespace-nowrap">Dewi Anggraini</td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">dewi2</code></td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">password123</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500">Kategori Compound (SMKN 1 Rogojampi)</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800 whitespace-nowrap">Atlet 3</td>
+                  <td class="px-4 py-3 text-slate-600 whitespace-nowrap">Budi Santoso</td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">budi3</code></td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">password123</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500">Kategori Traditional (SMPN 1 Rogojampi)</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800 whitespace-nowrap">Administrator</td>
+                  <td class="px-4 py-3 text-slate-600 whitespace-nowrap">Administrator</td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">admin</code></td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">admin123</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500">Manajemen Sistem &amp; Konfigurasi Global</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="border-l-4 border-blue-500 bg-blue-50 text-blue-900 rounded-r-lg p-4 text-sm">
+          <strong class="font-bold">Tips Pengujian Cepat:</strong> Pada antarmuka mobile, Anda tidak perlu mengetik
+          manual. Cukup tekan salah satu tombol <em>Chip Pilihan Cepat</em> pada layar login untuk mengisi kredensial
+          Pelatih, Atlet, Scoring, atau Admin secara instan.
+        </div>
+      </section>
+
+      <!-- Section 4 -->
+      <section id="fitur-web" class="scroll-mt-24 mb-12">
+        <h2
+          class="text-xl sm:text-2xl font-bold text-slate-900 border-b-2 border-slate-200 pb-2 mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-6 bg-forest-500 rounded-full shrink-0"></span>
+          4. Fitur Web Portal (Laravel 10)
+        </h2>
+        <p class="text-sm text-slate-600 mb-4">
+          Antarmuka berbasis Blade dan Tailwind CSS untuk pengelolaan administratif dan rekapitulasi pelatih:
+        </p>
+        <ul class="list-disc pl-6 space-y-2 text-sm text-slate-600 mb-6">
+          <li><strong class="text-slate-800">Manajemen Sesi Latihan:</strong> Pembuatan jadwal latihan baru, status
+            latihan (<em>Terjadwal</em>, <em>Berlangsung</em>, <em>Selesai</em>), dan fitur duplikasi jadwal ke pekan
+            berikutnya.</li>
+          <li><strong class="text-slate-800">Form Input Skor Multi-Atlet:</strong> Formulir penilaian per-end yang
+            memungkinkan pengisian skor beberapa atlet secara simultan.</li>
+          <li><strong class="text-slate-800">Analisis Atlet &amp; Ekspor:</strong> Melihat grafik perkembangan, moving
+            average, serta ekspor laporan performa ke format Excel dan PDF.</li>
+          <li><strong class="text-slate-800">Pengaturan Privasi Publik:</strong> Toggle administrator untuk mengizinkan
+            atau menonaktifkan leaderboard publik bagi pengunjung umum.</li>
+        </ul>
+      </section>
+
+      <!-- Section 5 -->
+      <section id="fitur-mobile" class="scroll-mt-24 mb-12">
+        <h2
+          class="text-xl sm:text-2xl font-bold text-slate-900 border-b-2 border-slate-200 pb-2 mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-6 bg-forest-500 rounded-full shrink-0"></span>
+          5. Fitur Aplikasi Mobile (React Native Expo)
+        </h2>
+        <p class="text-sm text-slate-600 mb-6">
+          Aplikasi mobile dibangun secara optimal untuk pemakaian di lapangan terbuka (outdoor) dengan integrasi REST
+          API Sanctum:
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+            <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mb-2">Keypad Lapangan</p>
+            <p class="text-xs text-slate-500 leading-relaxed">Tombol tembakan X, 10..1, M dengan auto-advance slot
+              panah.</p>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+            <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mb-2">Multi-Atlet</p>
+            <p class="text-xs text-slate-500 leading-relaxed">Pilihan multi-atlet bagi pelatih saat membimbing
+              rombongan.</p>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+            <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mb-2">Offline Draft</p>
+            <p class="text-xs text-slate-500 leading-relaxed">Penyimpanan skor di memori HP saat sinyal internet drop.
+            </p>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+            <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mb-2">Papan Peringkat</p>
+            <p class="text-xs text-slate-500 leading-relaxed">Leaderboard sesi &amp; publik real-time dengan filter
+              privasi atlet.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6 -->
+      <section id="scoring-keypad" class="scroll-mt-24 mb-12">
+        <h2
+          class="text-xl sm:text-2xl font-bold text-slate-900 border-b-2 border-slate-200 pb-2 mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-6 bg-forest-500 rounded-full shrink-0"></span>
+          6. Penilaian Lapangan &amp; Offline Draft
+        </h2>
+        <p class="text-sm text-slate-600 mb-4">
+          Komponen <code
+            class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">InputSkorScreen.js</code>
+          menyediakan alur kerja terpadu untuk pencatatan tembakan:
+        </p>
+        <div class="border-l-4 border-forest-500 bg-forest-50 text-forest-900 rounded-r-lg p-4 text-sm">
+          <strong class="font-bold block mb-2">Alur Kerja Penilaian:</strong>
+          <ol class="list-decimal pl-6 space-y-1">
+            <li>Pilih sesi latihan mingguan aktif dari tab carousel horizontal.</li>
+            <li>Pilih atlet sasaran (bisa pilih lebih dari satu atlet untuk mode pelatih).</li>
+            <li>Tentukan jarak tembak (default 30m) dan tanggal sesi.</li>
+            <li>Tekan tombol keypad (X, 10, 9..M) — nilai langsung terisi ke slot panah aktif dan otomatis berpindah ke
+              panah berikutnya.</li>
+            <li>Subtotal end dan akumulasi total sesi terhitung seketika tanpa jeda request jaringan.</li>
+            <li>Tekan <strong>"Simpan Skor Sesi"</strong> untuk mengirim data ke REST API. Jika jaringan sedang offline,
+              tekan <strong>"Draft Lokal"</strong>.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Section 7 -->
+      <section id="analisis-performa" class="scroll-mt-24 mb-12">
+        <h2
+          class="text-xl sm:text-2xl font-bold text-slate-900 border-b-2 border-slate-200 pb-2 mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-6 bg-forest-500 rounded-full shrink-0"></span>
+          7. Analisis Performa &amp; Stabilitas Atlet
+        </h2>
+        <p class="text-sm text-slate-600 mb-4">
+          Sistem menghitung metrik evaluasi objektif untuk membantu pelatih menilai kesiapan atlet:
+        </p>
+
+        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm min-w-[720px]">
+              <thead class="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Metrik
+                    Analisis</th>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Formula /
+                    Metode</th>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Interpretasi
+                    Pelatih</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800 whitespace-nowrap">Moving Average (MA-4)</td>
+                  <td class="px-4 py-3 text-slate-600">Rata-rata bergerak 4 sesi latihan berurutan</td>
+                  <td class="px-4 py-3 text-slate-500">Melihat tren kenaikan atau penurunan performa tanpa terpengaruh
+                    fluktuasi satu sesi.</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800 whitespace-nowrap">Standar Deviasi (&le; 2.2)</td>
+                  <td class="px-4 py-3 text-slate-600">Dispersi skor antar-end pada sesi terakhir</td>
+                  <td class="px-4 py-3">
+                    <span
+                      class="inline-block text-[11px] font-bold px-2 py-0.5 rounded-md bg-forest-50 text-forest-700 border border-forest-200">Sangat
+                      Stabil</span>
+                    <span class="text-slate-500 ml-2">Form tarikan, anchor, dan rilis sangat konsisten.</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800 whitespace-nowrap">Standar Deviasi (2.3 - 4.0)</td>
+                  <td class="px-4 py-3 text-slate-600">Dispersi skor antar-end pada sesi terakhir</td>
+                  <td class="px-4 py-3">
+                    <span
+                      class="inline-block text-[11px] font-bold px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200">Konsisten</span>
+                    <span class="text-slate-500 ml-2">Kondisi tembakan teratur dengan sedikit variasi tembakan
+                      lepas.</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800 whitespace-nowrap">Standar Deviasi (&gt; 4.0)</td>
+                  <td class="px-4 py-3 text-slate-600">Dispersi skor antar-end pada sesi terakhir</td>
+                  <td class="px-4 py-3">
+                    <span
+                      class="inline-block text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">Perlu
+                      Perbaikan</span>
+                    <span class="text-slate-500 ml-2">Rilis atau posisi anchor atlet belum ajeg.</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800 whitespace-nowrap">Lencana Motivasi (Badges)</td>
+                  <td class="px-4 py-3 text-slate-600">Pencapaian sesi, volume panah (300+), dan akurasi (250..300)</td>
+                  <td class="px-4 py-3 text-slate-500">Meningkatkan motivasi latihan mandiri dan disiplin kehadiran
+                    atlet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 8 -->
+      <section id="api-v1" class="scroll-mt-24 mb-12">
+        <h2
+          class="text-xl sm:text-2xl font-bold text-slate-900 border-b-2 border-slate-200 pb-2 mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-6 bg-forest-500 rounded-full shrink-0"></span>
+          <span>8. Spesifikasi REST API v1 <code
+              class="text-base sm:text-lg font-mono bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded">/api/v1</code></span>
+        </h2>
+        <p class="text-sm text-slate-600 mb-4">
+          Seluruh endpoint mengembalikan format JSON terstandarisasi melalui <code
+            class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">ApiResponse.php</code>
+          dengan struktur seragam:
+        </p>
+
+        <pre
+          class="bg-slate-900 text-slate-100 p-4 rounded-lg text-[11px] sm:text-xs font-mono leading-relaxed overflow-x-auto border border-slate-800 mb-6"><code>{
+  "success": true,
+  "message": "Pesan status keberhasilan",
+  "data": [ ... ],
+  "meta": {
+    "current_page": 1,
+    "per_page": 10,
+    "total": 12,
+    "last_page": 2,
+    "has_more": true
+  }
+}</code></pre>
+
+        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm min-w-[720px]">
+              <thead class="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Method</th>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Endpoint</th>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Otorisasi
+                  </th>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Deskripsi
+                    Singkat</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-green-100 text-green-800 uppercase">POST</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/auth/login</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Publik</td>
+                  <td class="px-4 py-3 text-slate-600">Login akun &amp; mengembalikan token Bearer Sanctum</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">GET</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/auth/me</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Bearer Token</td>
+                  <td class="px-4 py-3 text-slate-600">Profil user, relasi atlet, dan verifikasi token</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-green-100 text-green-800 uppercase">POST</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/auth/logout</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Bearer Token</td>
+                  <td class="px-4 py-3 text-slate-600">Pencabutan token Sanctum aktif</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">GET</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/sesi-latihan</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Bearer Token</td>
+                  <td class="px-4 py-3 text-slate-600">Daftar sesi latihan (paginasi 10 data, filter status)</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">GET</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/sesi-latihan/{id}</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Bearer Token</td>
+                  <td class="px-4 py-3 text-slate-600">Detail sesi latihan, agregat statistik &amp; ranking atlet</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">GET</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/atlet</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Bearer Token</td>
+                  <td class="px-4 py-3 text-slate-600">Daftar atlet aktif untuk pilihan input skor lapangan</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-green-100 text-green-800 uppercase">POST</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/skor</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Bearer Token</td>
+                  <td class="px-4 py-3 text-slate-600">Menyimpan tembakan multi-atlet &amp; evaluasi pelatih</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">GET</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/atlet/{id}/performa</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Bearer Token</td>
+                  <td class="px-4 py-3 text-slate-600">Statistik ringkasan, moving average, stabilitas &amp; badges</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">GET</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/atlet/{id}/riwayat</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Bearer Token</td>
+                  <td class="px-4 py-3 text-slate-600">Riwayat sesi latihan atlet (paginasi 10 item per halaman)</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-green-100 text-green-800 uppercase">POST</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/sesi/{sesi}/baca-catatan</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Bearer Token</td>
+                  <td class="px-4 py-3 text-slate-600">Menandai catatan evaluasi pelatih telah dibaca atlet</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-green-100 text-green-800 uppercase">POST</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/sesi/{sesi}/catatan</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Pelatih/Admin</td>
+                  <td class="px-4 py-3 text-slate-600">Menambahkan/memperbarui catatan evaluasi sesi atlet</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 uppercase">PUT</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/atlet/privasi</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Atlet</td>
+                  <td class="px-4 py-3 text-slate-600">Mengubah izin tampil pada papan peringkat publik</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">GET</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/public/leaderboard</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Publik</td>
+                  <td class="px-4 py-3 text-slate-600">Papan peringkat umum (hanya atlet yang opt-in)</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3"><span
+                      class="inline-block text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">GET</span>
+                  </td>
+                  <td class="px-4 py-3"><code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">/api/v1/public/sesi-latihan</code>
+                  </td>
+                  <td class="px-4 py-3 text-slate-500 whitespace-nowrap">Publik</td>
+                  <td class="px-4 py-3 text-slate-600">Jadwal latihan mingguan terbuka untuk umum</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 9 -->
+      <section id="panduan-lokal" class="scroll-mt-24 mb-12">
+        <h2
+          class="text-xl sm:text-2xl font-bold text-slate-900 border-b-2 border-slate-200 pb-2 mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-6 bg-forest-500 rounded-full shrink-0"></span>
+          9. Panduan Menjalankan Sistem Secara Lokal
+        </h2>
+        <p class="text-sm text-slate-600 mb-4">
+          Pastikan Apache dan MySQL di XAMPP telah menyala pada komputer Anda.
+        </p>
+
+        <h3 class="text-base font-bold text-slate-800 mt-6 mb-2">Langkah 1: Menjalankan Backend Laravel</h3>
+        <p class="text-sm text-slate-600 mb-3">Buka terminal PowerShell pada direktori backend:</p>
+        <pre
+          class="bg-slate-900 text-slate-100 p-4 rounded-lg text-[11px] sm:text-xs font-mono leading-relaxed overflow-x-auto border border-slate-800 mb-4"><code>cd c:\xampp\htdocs\Non-Production\ArcheryPro\web
+php artisan serve --host=0.0.0.0 --port=8000</code></pre>
+
+        <div class="border-l-4 border-blue-500 bg-blue-50 text-blue-900 rounded-r-lg p-4 text-sm mb-6">
+          <strong class="font-bold">Penting:</strong> Parameter <code
+            class="bg-white/60 text-blue-800 px-1.5 py-0.5 rounded text-xs font-semibold">--host=0.0.0.0</code>
+          diperlukan agar HP fisik atau emulator dapat mengakses backend melalui jaringan WiFi yang sama di alamat IP
+          laptop (<code
+            class="bg-white/60 text-blue-800 px-1.5 py-0.5 rounded text-xs font-semibold">http://192.168.1.4:8000</code>).
+        </div>
+
+        <h3 class="text-base font-bold text-slate-800 mt-6 mb-2">Langkah 2: Menjalankan Frontend Mobile Expo</h3>
+        <p class="text-sm text-slate-600 mb-3">Buka terminal PowerShell baru pada direktori mobile:</p>
+        <pre
+          class="bg-slate-900 text-slate-100 p-4 rounded-lg text-[11px] sm:text-xs font-mono leading-relaxed overflow-x-auto border border-slate-800 mb-4"><code>cd c:\xampp\htdocs\Non-Production\ArcheryPro\mobile
+npm start</code></pre>
+
+        <ul class="list-disc pl-6 space-y-2 text-sm text-slate-600">
+          <li><strong class="text-slate-800">Uji di HP Fisik (Rekomendasi):</strong> Buka aplikasi <strong>Expo
+              Go</strong> di HP Android/iOS, lalu scan QR code terminal. Aplikasi otomatis mendeteksi IP WiFi PC (<code
+              class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">192.168.1.4</code>).</li>
+          <li><strong class="text-slate-800">Uji di Browser PC:</strong> Tekan tombol <code
+              class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">w</code> pada terminal
+            Expo untuk membuka di browser.</li>
+          <li><strong class="text-slate-800">Uji di Android Emulator:</strong> Tekan tombol <code
+              class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">a</code> pada terminal
+            Expo.</li>
+        </ul>
+      </section>
+
+      <!-- Section 10 -->
+      <section id="troubleshooting" class="scroll-mt-24 mb-12">
+        <h2
+          class="text-xl sm:text-2xl font-bold text-slate-900 border-b-2 border-slate-200 pb-2 mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-6 bg-forest-500 rounded-full shrink-0"></span>
+          10. Riwayat Masalah Teknis &amp; Solusi Nyata (v1.0.0)
+        </h2>
+        <p class="text-sm text-slate-600 mb-4">
+          Dokumentasi kendala nyata yang ditemukan selama pengembangan versi 1.0.0 beserta solusi kodenya:
+        </p>
+
+        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm min-w-[720px]">
+              <thead class="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Kendala /
+                    Pesan Error</th>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Penyebab
+                    Teknis</th>
+                  <th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">Solusi yang
+                    Telah Diterapkan</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800">Fetch request has been canceled</td>
+                  <td class="px-4 py-3 text-slate-600">Server Laravel di port 8000 belum menyala atau HP mencoba
+                    menghubungi IP loopback (10.0.2.2 / localhost).</td>
+                  <td class="px-4 py-3 text-slate-600">Menjalankan backend dengan <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">--host=0.0.0.0</code>
+                    dan menerapkan auto-detection IP host via <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">NativeModules.SourceCode.scriptURL</code>
+                    pada <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">mobile/src/services/api.js</code>.
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800">Skor atlet di luar pilihan checkbox</td>
+                  <td class="px-4 py-3 text-slate-600">Objek state <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">scores</code>
+                    membawa kunci atlet yang sempat dicentang lalu dibatalkan.</td>
+                  <td class="px-4 py-3 text-slate-600">Menyaring <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">cleanSkor</code>
+                    di frontend sesuai <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">selectedAtletIds</code>
+                    dan menambahkan <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">prepareForValidation()</code>
+                    di <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">StoreSkorRequest.php</code>.
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800">Duplicate entry uniq_sesi_atlet</td>
+                  <td class="px-4 py-3 text-slate-600">Tabel <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">sesi</code>
+                    menggunakan SoftDeletes, namun MySQL unique constraint tetap mendeteksi baris soft-deleted.</td>
+                  <td class="px-4 py-3 text-slate-600">Menggunakan <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">Sesi::withTrashed()-&gt;where(...)</code>
+                    dan melakukan <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">$sesi-&gt;restore()</code>
+                    pada <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">SkorService.php</code>,
+                    serta <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">forceDelete()</code>
+                    saat pembersihan data seeder.</td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800">Class App\Models\Pengaturan not found</td>
+                  <td class="px-4 py-3 text-slate-600">Pengaturan sistem tersimpan di model <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">PengaturanSistem</code>,
+                    bukan <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">Pengaturan</code>.
+                  </td>
+                  <td class="px-4 py-3 text-slate-600">Menyelaraskan impor dan pemanggilan fungsi ke <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">PengaturanSistem::getValue()</code>
+                    di <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">PublicController.php</code>.
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="px-4 py-3 font-bold text-slate-800">Cannot read properties of undefined (reading 'data')
+                  </td>
+                  <td class="px-4 py-3 text-slate-600">Komponen mobile mengakses <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">res.data.data</code>,
+                    padahal trait <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">ApiResponse</code>
+                    menempatkan array langsung di <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">res.data</code>.
+                  </td>
+                  <td class="px-4 py-3 text-slate-600">Menstandarkan ekstraksi data dengan sintaks aman: <code
+                      class="bg-slate-100 text-forest-700 px-1.5 py-0.5 rounded text-xs font-semibold">Array.isArray(res?.data) ? res.data : (res?.data?.data || [])</code>.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 11 -->
+      <section id="design-system" class="scroll-mt-24 mb-12">
+        <h2
+          class="text-xl sm:text-2xl font-bold text-slate-900 border-b-2 border-slate-200 pb-2 mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-6 bg-forest-500 rounded-full shrink-0"></span>
+          11. Standar Desain Sistem (Solid Forest Green)
+        </h2>
+        <p class="text-sm text-slate-600 mb-6">
+          Seluruh antarmuka Web dan Mobile dirancang dengan standar konsistensi visual tinggi:
+        </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
+          <div class="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+            <div class="h-16" style="background: #2E7D32;"></div>
+            <div class="p-2 text-[11px]">
+              <div class="font-bold text-slate-800">Primary Forest</div>
+              <div class="text-slate-400">#2E7D32</div>
+            </div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+            <div class="h-16" style="background: #1B5E20;"></div>
+            <div class="p-2 text-[11px]">
+              <div class="font-bold text-slate-800">Primary Dark</div>
+              <div class="text-slate-400">#1B5E20</div>
+            </div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+            <div class="h-16" style="background: #4CAF50;"></div>
+            <div class="p-2 text-[11px]">
+              <div class="font-bold text-slate-800">Primary Light</div>
+              <div class="text-slate-400">#4CAF50</div>
+            </div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+            <div class="h-16" style="background: #E8F5E9;"></div>
+            <div class="p-2 text-[11px]">
+              <div class="font-bold text-slate-800">Primary Muted</div>
+              <div class="text-slate-400">#E8F5E9</div>
+            </div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+            <div class="h-16" style="background: #F8FAFC;"></div>
+            <div class="p-2 text-[11px]">
+              <div class="font-bold text-slate-800">Background</div>
+              <div class="text-slate-400">#F8FAFC</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-l-4 border-amber-500 bg-amber-50 text-amber-900 rounded-r-lg p-4 text-sm">
+          <strong class="font-bold block mb-1">Aturan Visual Wajib:</strong>
+          <ul class="list-disc pl-6 space-y-1">
+            <li><strong>Zero Gradients:</strong> Tidak menggunakan gradien warna di seluruh elemen tombol, kartu, maupun
+              header.</li>
+            <li><strong>Paginasi 10 Baris:</strong> Seluruh tabel dan daftar data dibatasi tepat 10 data per halaman.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="mt-16 pt-6 border-t border-slate-200 text-center text-xs text-slate-400">
+        Dokumentasi Sistem <strong class="text-slate-600">ArcheryPro v1.0.0</strong> • Dikembangkan untuk lingkungan
+        lokal • 2026
+      </footer>
+
+    </div>
+  </main>
+
+  <script>
+    // ============ SIDEBAR DRAWER (mobile) ============
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const menuToggle = document.getElementById('menuToggle');
+    const menuClose = document.getElementById('menuClose');
+
+    function openSidebar() {
+      sidebar.classList.remove('-translate-x-full');
+      overlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    menuToggle.addEventListener('click', openSidebar);
+    menuClose.addEventListener('click', closeSidebar);
+    overlay.addEventListener('click', closeSidebar);
+
+    // Tutup sidebar saat link diklik (mobile)
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 1024) closeSidebar();
+      });
+    });
+
+    // Tutup sidebar jika resize ke desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 1024) {
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // ============ ACTIVE LINK ON SCROLL ============
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    function updateActiveLink() {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('bg-forest-50', 'text-forest-700', 'font-bold');
+        link.classList.add('text-slate-600');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('bg-forest-50', 'text-forest-700', 'font-bold');
+          link.classList.remove('text-slate-600');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    window.addEventListener('load', updateActiveLink);
+  </script>
+</body>
+
+</html>
