@@ -1,0 +1,306 @@
+================================================================================
+STRUKTUR FOLDER & FILE LENGKAP
+================================================================================
+
+archerypro/
+│
+├── app/
+│   ├── Console/
+│   │   └── Kernel.php                          # Schedule backup otomatis
+│   │
+│   ├── Exceptions/
+│   │   └── Handler.php
+│   │
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Controller.php
+│   │   │   │
+│   │   │   ├── Auth/
+│   │   │   │   ├── AuthController.php          # login, logout
+│   │   │   │   ├── RegisterAtletController.php # registrasi atlet (tanpa token)
+│   │   │   │   ├── RegisterPelatihController.php # registrasi pelatih (token)
+│   │   │   │   └── RegisterScoringController.php # registrasi scoring (token)
+│   │   │   │
+│   │   │   ├── Public/
+│   │   │   │   ├── HomeController.php          # beranda
+│   │   │   │   └── EventResultController.php   # hasil event publik
+│   │   │   │
+│   │   │   ├── Admin/
+│   │   │   │   ├── DashboardController.php
+│   │   │   │   ├── UserController.php          # CRUD user, reset pass/token
+│   │   │   │   ├── AtletController.php         # CRUD atlet, verifikasi
+│   │   │   │   ├── EventController.php         # CRUD event, set status
+│   │   │   │   ├── SekolahController.php       # CRUD sekolah
+│   │   │   │   ├── KategoriController.php      # CRUD kategori
+│   │   │   │   ├── PengaturanController.php    # token, jumlah panah per end
+│   │   │   │   ├── BackupController.php        # backup & restore
+│   │   │   │   └── LogAktivitasController.php  # log aktivitas
+│   │   │   │
+│   │   │   ├── Pelatih/
+│   │   │   │   ├── DashboardController.php
+│   │   │   │   ├── AtletController.php         # CRUD atlet
+│   │   │   │   ├── AnalisisController.php      # grafik per atlet/event
+│   │   │   │   ├── EksporController.php        # ekspor laporan
+│   │   │   │   └── EventController.php         # manajemen event terbatas
+│   │   │   │
+│   │   │   ├── Scoring/
+│   │   │   │   ├── DashboardController.php     # ringkasan input hari ini
+│   │   │   │   ├── InputSkorController.php     # form multi-atlet
+│   │   │   │   └── RiwayatController.php       # riwayat input sendiri
+│   │   │   │
+│   │   │   └── Atlet/
+│   │   │       ├── DashboardController.php
+│   │   │       ├── RiwayatController.php
+│   │   │       ├── GrafikController.php
+│   │   │       ├── EksporController.php
+│   │   │       └── ProfilController.php        # edit profil
+│   │   │
+│   │   ├── Middleware/
+│   │   │   ├── Authenticate.php
+│   │   │   ├── RedirectIfAuthenticated.php
+│   │   │   ├── RoleMiddleware.php              # cek role
+│   │   │   └── LogAktivitasMiddleware.php      # auto-log request
+│   │   │
+│   │   └── Requests/
+│   │       ├── Auth/
+│   │       │   ├── LoginRequest.php
+│   │       │   ├── RegisterAtletRequest.php
+│   │       │   ├── RegisterPelatihRequest.php
+│   │       │   └── RegisterScoringRequest.php
+│   │       ├── AtletRequest.php
+│   │       ├── EventRequest.php
+│   │       ├── SekolahRequest.php
+│   │       ├── KategoriRequest.php
+│   │       ├── UserRequest.php
+│   │       ├── StoreSkorRequest.php            # validasi multi-atlet
+│   │       └── PengaturanRequest.php
+│   │
+│   ├── Models/
+│   │   ├── User.php
+│   │   ├── Atlet.php
+│   │   ├── Sekolah.php
+│   │   ├── Kategori.php
+│   │   ├── Event.php
+│   │   ├── Sesi.php
+│   │   ├── Skor.php
+│   │   ├── LogSkor.php
+│   │   ├── BackupLog.php
+│   │   ├── LogAktivitas.php
+│   │   └── PengaturanSistem.php
+│   │
+│   ├── Policies/
+│   │   ├── AtletPolicy.php
+│   │   ├── SkorPolicy.php
+│   │   ├── EventPolicy.php
+│   │   └── UserPolicy.php
+│   │
+│   ├── Providers/
+│   │   ├── AppServiceProvider.php
+│   │   ├── AuthServiceProvider.php
+│   │   ├── EventServiceProvider.php
+│   │   └── RouteServiceProvider.php
+│   │
+│   └── Services/
+│       ├── SkorService.php                     # hitung total, simpan multi-atlet
+│       ├── BackupService.php                   # 5 format backup
+│       ├── EksporService.php                   # PDF, Word, Excel
+│       ├── LogService.php                      # wrapper log aktivitas
+│       └── PengaturanService.php               # cache pengaturan
+│
+├── bootstrap/
+│   ├── app.php
+│   └── cache/
+│
+├── config/
+│   ├── app.php
+│   ├── auth.php                                # guard web, provider users
+│   ├── backup.php                              # config spatie/laravel-backup
+│   ├── database.php
+│   ├── dompdf.php
+│   ├── excel.php
+│   ├── permission.php                          # config spatie permission
+│   ├── activitylog.php                         # config spatie activitylog
+│   └── ... (config lain default Laravel)
+│
+├── database/
+│   ├── factories/
+│   │   ├── UserFactory.php
+│   │   └── AtletFactory.php
+│   │
+│   ├── migrations/
+│   │   ├── 2024_01_01_000001_create_users_table.php
+│   │   ├── 2024_01_01_000002_create_permission_tables.php   # spatie
+│   │   ├── 2024_01_01_000003_create_sekolah_table.php
+│   │   ├── 2024_01_01_000004_create_kategori_table.php
+│   │   ├── 2024_01_01_000005_create_atlet_table.php
+│   │   ├── 2024_01_01_000006_create_event_table.php
+│   │   ├── 2024_01_01_000007_create_sesi_table.php
+│   │   ├── 2024_01_01_000008_create_skor_table.php
+│   │   ├── 2024_01_01_000009_create_log_skor_table.php
+│   │   ├── 2024_01_01_000010_create_backup_log_table.php
+│   │   ├── 2024_01_01_000011_create_log_aktivitas_table.php
+│   │   ├── 2024_01_01_000012_create_pengaturan_sistem_table.php
+│   │   └── 2024_01_01_000013_create_activity_log_table.php # spatie
+│   │
+│   └── seeders/
+│       ├── DatabaseSeeder.php
+│       ├── RolePermissionSeeder.php            # 4 role + permission
+│       ├── AdminSeeder.php                     # admin default
+│       ├── PengaturanSeeder.php                # token, jumlah panah
+│       └── KategoriSeeder.php                  # Recurve, Compound, dll
+│
+├── public/
+│   ├── index.php
+│   ├── build/                                  # hasil vite build
+│   └── storage/                                # symlink
+│
+├── resources/
+│   ├── css/
+│   │   └── app.css                             # @tailwind directives
+│   │
+│   ├── js/
+│   │   ├── app.js                              # Alpine, Chart.js, SweetAlert
+│   │   ├── components/
+│   │   │   ├── input-skor.js                   # Alpine component multi-atlet
+│   │   │   ├── grafik-performa.js              # Chart.js line chart
+│   │   │   └── validasi-realtime.js            # validasi 0-10
+│   │   └── bootstrap.js
+│   │
+│   └── views/
+│       ├── layouts/
+│       │   ├── app.blade.php                   # layout utama (auth)
+│       │   ├── public.blade.php                # layout publik (no auth)
+│       │   ├── auth.blade.php                  # layout khusus auth
+│       │   └── partials/
+│       │       ├── head.blade.php              # meta, css, favicon
+│       │       ├── navbar.blade.php
+│       │       ├── sidebar.blade.php           # sidebar per role
+│       │       ├── footer.blade.php
+│       │       ├── alert.blade.php             # flash message
+│       │       └── breadcrumb.blade.php
+│       │
+│       ├── components/
+│       │   ├── card-stat.blade.php             # card statistik dashboard
+│       │   ├── table-empty.blade.php
+│       │   ├── modal-confirm.blade.php
+│       │   ├── btn-primary.blade.php
+│       │   └── input-error.blade.php
+│       │
+│       ├── auth/
+│       │   ├── login.blade.php
+│       │   ├── register-atlet.blade.php
+│       │   ├── register-pelatih.blade.php
+│       │   └── register-scoring.blade.php
+│       │
+│       ├── public/
+│       │   ├── home.blade.php
+│       │   ├── event-result.blade.php
+│       │   └── event-detail.blade.php
+│       │
+│       ├── admin/
+│       │   ├── dashboard.blade.php
+│       │   ├── users/
+│       │   │   ├── index.blade.php
+│       │   │   ├── create.blade.php
+│       │   │   ├── edit.blade.php
+│       │   │   └── show.blade.php
+│       │   ├── atlet/
+│       │   │   ├── index.blade.php
+│       │   │   ├── create.blade.php
+│       │   │   ├── edit.blade.php
+│       │   │   └── show.blade.php
+│       │   ├── event/
+│       │   │   ├── index.blade.php
+│       │   │   ├── create.blade.php
+│       │   │   └── edit.blade.php
+│       │   ├── sekolah/
+│       │   │   ├── index.blade.php
+│       │   │   ├── create.blade.php
+│       │   │   └── edit.blade.php
+│       │   ├── kategori/
+│       │   │   ├── index.blade.php
+│       │   │   ├── create.blade.php
+│       │   │   └── edit.blade.php
+│       │   ├── pengaturan/
+│       │   │   └── index.blade.php             # token, jumlah panah per end
+│       │   ├── backup/
+│       │   │   ├── index.blade.php
+│       │   │   └── riwayat.blade.php
+│       │   └── log-aktivitas/
+│       │       └── index.blade.php
+│       │
+│       ├── pelatih/
+│       │   ├── dashboard.blade.php
+│       │   ├── atlet/
+│       │   │   ├── index.blade.php
+│       │   │   ├── create.blade.php
+│       │   │   ├── edit.blade.php
+│       │   │   └── show.blade.php
+│       │   ├── analisis/
+│       │   │   ├── index.blade.php             # pilih atlet
+│       │   │   └── detail.blade.php            # grafik per atlet
+│       │   ├── ekspor/
+│       │   │   └── index.blade.php             # filter & tombol ekspor
+│       │   └── event/
+│       │       ├── index.blade.php
+│       │       └── edit.blade.php
+│       │
+│       ├── scoring/
+│       │   ├── dashboard.blade.php
+│       │   ├── input/
+│       │   │   ├── index.blade.php             # form multi-atlet
+│       │   │   └── konfirmasi.blade.php        # review sebelum simpan
+│       │   └── riwayat/
+│       │       └── index.blade.php
+│       │
+│       └── atlet/
+│           ├── dashboard.blade.php
+│           ├── riwayat.blade.php
+│           ├── grafik.blade.php
+│           ├── profil.blade.php
+│           └── ekspor.blade.php
+│
+├── routes/
+│   ├── web.php                                 # semua route web
+│   ├── api.php                                 # opsional
+│   ├── auth.php                                # route login/register/logout
+│   ├── admin.php                               # route group admin
+│   ├── pelatih.php                             # route group pelatih
+│   ├── scoring.php                             # route group scoring
+│   ├── atlet.php                               # route group atlet
+│   └── public.php                              # route publik
+│
+├── storage/
+│   ├── app/
+│   │   ├── backups/                            # hasil backup
+│   │   │   ├── json/
+│   │   │   ├── pdf/
+│   │   │   ├── docx/
+│   │   │   ├── xlsx/
+│   │   │   └── txt/
+│   │   └── public/
+│   │       └── avatar/                         # foto atlet (opsional)
+│   └── logs/
+│       └── laravel.log
+│
+├── tests/
+│   ├── Feature/
+│   │   ├── AuthTest.php
+│   │   ├── RegistrasiTokenTest.php
+│   │   ├── InputSkorMultiAtletTest.php
+│   │   └── BackupTest.php
+│   └── Unit/
+│       ├── SkorServiceTest.php
+│       └── PengaturanServiceTest.php
+│
+├── .env.example
+├── .gitignore
+├── artisan
+├── composer.json
+├── package.json
+├── tailwind.config.js
+├── postcss.config.js
+├── vite.config.js
+└── README.md
+
+================================================================================

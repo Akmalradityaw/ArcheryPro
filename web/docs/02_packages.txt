@@ -1,0 +1,145 @@
+================================================================================
+DAFTAR PACKAGE YANG DIGUNAKAN
+================================================================================
+
+--------------------------------------------------------------------------------
+A. COMPOSER PACKAGES (PHP)
+--------------------------------------------------------------------------------
+
+[WAJIB INSTALL]
+
+1. spatie/laravel-permission
+   Versi    : ^6.0
+   Fungsi   : Manajemen role & permission (admin, pelatih, scoring, atlet)
+   Alasan   : Lebih fleksibel dari enum role, mudah di-extend
+
+2. barryvdh/laravel-dompdf
+   Versi    : ^2.0
+   Fungsi   : Generate PDF (laporan performa, backup skor)
+   Alasan   : Ringan, tidak butuh wkhtmltopdf binary
+
+3. phpoffice/phpword
+   Versi    : ^1.1
+   Fungsi   : Generate Word (.docx) yang bisa diedit
+   Alasan   : Alternatif dari laravel-dompdf untuk format editable
+
+4. maatwebsite/excel
+   Versi    : ^3.1
+   Fungsi   : Generate Excel (.xlsx) dengan fitur pivot, filter
+   Alasan   : Paket Excel paling mature di Laravel
+
+5. spatie/laravel-backup
+   Versi    : ^8.0
+   Fungsi   : Backup otomatis (harian, mingguan, bulanan)
+   Alasan   : Built-in scheduler, kompatibel dengan sistem
+
+6. spatie/laravel-activitylog
+   Versi    : ^4.7
+   Fungsi   : Log aktivitas umum sistem
+   Alasan   : Bisa jadi basis untuk tabel log_aktivitas
+   CATATAN  : Untuk log_skor tetap custom karena butuh data_lama & data_baru
+
+7. laravel/pint
+   Versi    : ^1.13 (dev)
+   Fungsi   : Code formatter PSR-12
+   Alasan   : Konsistensi code style
+
+[OPSIONAL]
+
+8. yajra/laravel-datatables-oracle
+   Versi    : ^10.0
+   Fungsi   : Tabel data server-side (admin panel)
+   Alasan   : Untuk tabel besar (log aktivitas, riwayat skor)
+
+9. intervention/image
+   Versi    : ^3.0
+   Fungsi   : Manipulasi gambar (upload foto atlet)
+   Alasan   : Kalau butuh foto profil atlet
+
+10. laravel-lang/lang (atau laravel-lang/common)
+    Versi    : ^12.0
+    Fungsi   : Terjemahan bahasa Indonesia untuk validasi & auth
+    Alasan   : UI berbahasa Indonesia
+
+--------------------------------------------------------------------------------
+B. NPM PACKAGES (Frontend)
+--------------------------------------------------------------------------------
+
+[WAJIB INSTALL]
+
+1. tailwindcss
+   Versi    : ^3.4
+   Fungsi   : Utility-first CSS framework
+
+2. daisyui
+   Versi    : ^4.12
+   Fungsi   : Komponen UI di atas Tailwind
+   PENTING  : DaisyUI v4 = kompatibel Tailwind v3
+              DaisyUI v5 = HANYA untuk Tailwind v4
+              Karena project pakai Tailwind v3, WAJIB DaisyUI v4
+
+3. alpinejs
+   Versi    : ^3.13
+   Fungsi   : Interaktivitas ringan (checkbox multi-atlet, validasi real-time)
+
+4. chart.js
+   Versi    : ^4.4
+   Fungsi   : Grafik performa atlet (line chart)
+
+5. @tailwindcss/forms
+   Versi    : ^0.5
+   Fungsi   : Reset style form agar konsisten
+
+6. @tailwindcss/typography
+   Versi    : ^0.5
+   Fungsi   : Styling konten prose (untuk laporan)
+
+7. vite
+   Versi    : ^5.0
+   Fungsi   : Build tool (default Laravel 10)
+
+8. laravel-vite-plugin
+   Versi    : ^1.0
+   Fungsi   : Integrasi Vite dengan Laravel
+
+[OPSIONAL]
+
+9. sweetalert2
+   Versi    : ^11.0
+   Fungsi   : Konfirmasi dialog cantik (hapus, konfirmasi skor)
+
+10. flatpickr
+    Versi    : ^4.6
+    Fungsi   : Date picker dengan format DD/MM/YYYY
+
+--------------------------------------------------------------------------------
+C. KONFIGURASI TAILWIND + DAISYUI
+--------------------------------------------------------------------------------
+
+File: tailwind.config.js
+- colors.primary.DEFAULT = '#2E7D32'  (hijau solid)
+- colors.primary.light   = '#4CAF50'
+- colors.primary.dark    = '#1B5E20'
+- daisyui.themes = custom theme "archery" dengan base hijau
+- JANGAN pakai gradient, JANGAN pakai theme default DaisyUI yang colorful
+- Plugins: @tailwindcss/forms, @tailwindcss/typography, daisyui
+
+--------------------------------------------------------------------------------
+D. AUTH CUSTOM (TANPA BREEZE)
+--------------------------------------------------------------------------------
+
+Kenapa custom?
+- Breeze pakai struktur & views bawaan yang tidak sesuai spec
+- Butuh registrasi multi-role dengan token berbeda (pelatih/scoring)
+- Kontrol penuh atas layout & flow
+
+Yang perlu dibuat manual:
+- AuthController (login, logout, showLogin)
+- RegisterController (registerAtlet, registerPelatih, registerScoring)
+- Middleware: Authenticate (cek login), RedirectIfAuthenticated
+- Middleware: RoleMiddleware (pakai spatie/laravel-permission)
+- Blade: auth/login.blade.php, auth/register-atlet.blade.php,
+         auth/register-pelatih.blade.php, auth/register-scoring.blade.php
+- Guard: gunakan guard 'web' standar (session-based)
+
+================================================================================

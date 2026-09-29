@@ -1,0 +1,100 @@
+================================================================================
+STRUKTUR ROUTES
+================================================================================
+
+--------------------------------------------------------------------------------
+A. routes/auth.php  (prefix: /, middleware: guest)
+--------------------------------------------------------------------------------
+GET    /login                      -> AuthController@showLogin
+POST   /login                      -> AuthController@login
+POST   /logout                     -> AuthController@logout  (middleware: auth)
+
+GET    /register/atlet             -> RegisterAtletController@showForm
+POST   /register/atlet             -> RegisterAtletController@store
+
+GET    /register/pelatih           -> RegisterPelatihController@showForm
+POST   /register/pelatih           -> RegisterPelatihController@store
+
+GET    /register/scoring           -> RegisterScoringController@showForm
+POST   /register/scoring           -> RegisterScoringController@store
+
+--------------------------------------------------------------------------------
+B. routes/public.php  (middleware: none)
+--------------------------------------------------------------------------------
+GET    /                           -> HomeController@index
+GET    /events                     -> EventResultController@index
+GET    /events/{event}             -> EventResultController@show
+
+--------------------------------------------------------------------------------
+C. routes/admin.php  (prefix: /admin, middleware: auth + role:admin)
+--------------------------------------------------------------------------------
+GET    /admin/dashboard            -> DashboardController@index
+
+RESOURCE /admin/users              -> UserController
+POST   /admin/users/{user}/reset-password  -> UserController@resetPassword
+POST   /admin/users/{user}/reset-token     -> UserController@resetToken
+
+RESOURCE /admin/atlet              -> AtletController
+POST   /admin/atlet/{atlet}/verifikasi     -> AtletController@verifikasi
+
+RESOURCE /admin/event              -> EventController
+POST   /admin/event/{event}/status -> EventController@setStatus
+
+RESOURCE /admin/sekolah            -> SekolahController
+RESOURCE /admin/kategori           -> KategoriController
+
+GET    /admin/pengaturan           -> PengaturanController@index
+PUT    /admin/pengaturan           -> PengaturanController@update
+
+GET    /admin/backup               -> BackupController@index
+POST   /admin/backup/run           -> BackupController@run
+POST   /admin/backup/restore       -> BackupController@restore
+GET    /admin/backup/download/{id} -> BackupController@download
+GET    /admin/backup/riwayat       -> BackupController@riwayat
+
+GET    /admin/log-aktivitas        -> LogAktivitasController@index
+GET    /admin/log-aktivitas/export -> LogAktivitasController@export
+
+--------------------------------------------------------------------------------
+D. routes/pelatih.php  (prefix: /pelatih, middleware: auth + role:pelatih)
+--------------------------------------------------------------------------------
+GET    /pelatih/dashboard          -> DashboardController@index
+
+RESOURCE /pelatih/atlet            -> AtletController
+
+GET    /pelatih/analisis           -> AnalisisController@index
+GET    /pelatih/analisis/{atlet}   -> AnalisisController@show
+
+GET    /pelatih/ekspor             -> EksporController@index
+POST   /pelatih/ekspor/performa    -> EksporController@performa
+
+RESOURCE /pelatih/event            -> EventController  (only: index, edit, update)
+
+--------------------------------------------------------------------------------
+E. routes/scoring.php  (prefix: /scoring, middleware: auth + role:scoring)
+--------------------------------------------------------------------------------
+GET    /scoring/dashboard          -> DashboardController@index
+
+GET    /scoring/input              -> InputSkorController@create
+POST   /scoring/input              -> InputSkorController@store
+POST   /scoring/input/konfirmasi   -> InputSkorController@konfirmasi
+POST   /scoring/input/selesai      -> InputSkorController@selesai
+
+GET    /scoring/riwayat            -> RiwayatController@index
+GET    /scoring/riwayat/{sesi}     -> RiwayatController@show
+
+--------------------------------------------------------------------------------
+F. routes/atlet.php  (prefix: /atlet, middleware: auth + role:atlet)
+--------------------------------------------------------------------------------
+GET    /atlet/dashboard            -> DashboardController@index
+GET    /atlet/riwayat              -> RiwayatController@index
+GET    /atlet/grafik               -> GrafikController@index
+GET    /atlet/profil               -> ProfilController@edit
+PUT    /atlet/profil               -> ProfilController@update
+
+GET    /atlet/ekspor               -> EksporController@index
+POST   /atlet/ekspor/pdf           -> EksporController@pdf
+POST   /atlet/ekspor/excel         -> EksporController@excel
+POST   /atlet/ekspor/word          -> EksporController@word
+
+================================================================================

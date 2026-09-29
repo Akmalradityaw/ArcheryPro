@@ -1,0 +1,161 @@
+================================================================================
+PRIORITAS PENGERJAAN (UNTUK OPENCODE AI AGENT)
+================================================================================
+
+Kerjakan secara BERURUTAN. Jangan lanjut ke tahap berikutnya jika tahap
+sebelumnya belum selesai dan teruji.
+
+--------------------------------------------------------------------------------
+TAHAP 1: SETUP PROJECT
+--------------------------------------------------------------------------------
+1.1  Buat project Laravel 10 fresh
+     composer create-project laravel/laravel archerypro "10.*"
+1.2  Setup .env (DB, APP_NAME=ArcheryPro)
+1.3  Install package composer (lihat file 02_packages.txt)
+1.4  Install package npm (tailwindcss v3, daisyui v4, alpinejs, chart.js)
+1.5  Konfigurasi tailwind.config.js + postcss.config.js
+1.6  Setup resources/css/app.css dengan @tailwind directives
+1.7  Setup resources/js/app.js (import Alpine, Chart.js)
+1.8  Konfigurasi vite.config.js
+
+--------------------------------------------------------------------------------
+TAHAP 2: DATABASE & MODEL
+--------------------------------------------------------------------------------
+2.1  Buat 12 migration (11 tabel + tabel spatie permission)
+2.2  Buat 11 model dengan relasi Eloquent lengkap
+2.3  Buat seeder:
+     - RolePermissionSeeder (admin, pelatih, scoring, atlet)
+     - AdminSeeder (admin/admin123)
+     - PengaturanSeeder (token, jumlah panah)
+     - KategoriSeeder (Recurve, Compound, Traditional, Barebow)
+2.4  Jalankan migrate --seed
+
+--------------------------------------------------------------------------------
+TAHAP 3: AUTH CUSTOM (TANPA BREEZE)
+--------------------------------------------------------------------------------
+3.1  Buat AuthController (showLogin, login, logout)
+3.2  Buat RegisterAtletController (tanpa token)
+3.3  Buat RegisterPelatihController (validasi token PELATIH2025)
+3.4  Buat RegisterScoringController (validasi token SKORING2025)
+3.5  Buat Form Request untuk tiap registrasi
+3.6  Buat middleware Authenticate + RedirectIfAuthenticated
+3.7  Buat middleware RoleMiddleware (pakai spatie)
+3.8  Buat layout auth.blade.php
+3.9  Buat view: login, register-atlet, register-pelatih, register-scoring
+3.10 Setup routes/auth.php
+
+--------------------------------------------------------------------------------
+TAHAP 4: LAYOUTING BLADE
+--------------------------------------------------------------------------------
+4.1  layouts/app.blade.php (drawer + sidebar)
+4.2  layouts/public.blade.php
+4.3  layouts/partials/head.blade.php
+4.4  layouts/partials/navbar.blade.php
+4.5  layouts/partials/sidebar.blade.php + menu per role
+4.6  layouts/partials/footer.blade.php
+4.7  layouts/partials/alert.blade.php
+4.8  Component: x-card-stat, x-btn-primary, x-table-empty,
+     x-modal-confirm, x-input-error, x-alert, x-badge-status
+
+--------------------------------------------------------------------------------
+TAHAP 5: HALAMAN PUBLIK
+--------------------------------------------------------------------------------
+5.1  HomeController + view home.blade.php (event terbaru)
+5.2  EventResultController + view event-result.blade.php
+5.3  Route publik di routes/public.php
+
+--------------------------------------------------------------------------------
+TAHAP 6: HALAMAN ADMIN
+--------------------------------------------------------------------------------
+6.1  Dashboard admin (statistik: total atlet, event, sesi, skor)
+6.2  CRUD Users (index, create, edit, delete, reset password, reset token)
+6.3  CRUD Atlet + verifikasi status
+6.4  CRUD Event + set status (draft/berlangsung/selesai)
+6.5  CRUD Sekolah
+6.6  CRUD Kategori
+6.7  Pengaturan Sistem (token pelatih, token scoring, jumlah panah/end)
+6.8  Backup & Restore (5 format) + riwayat backup
+6.9  Log Aktivitas (filter, cari, ekspor)
+
+--------------------------------------------------------------------------------
+TAHAP 7: HALAMAN SCORING  (FITUR KRITIS!)
+--------------------------------------------------------------------------------
+7.1  Dashboard scoring (ringkasan input hari ini)
+7.2  Form Input Skor:
+     - Pilih event (hanya status 'berlangsung')
+     - Pilih tanggal sesi (default hari ini)
+     - Pilih end ke-berapa
+     - CHECKBOX multi-atlet (data dari users.role='atlet')
+     - Input 6 skor per atlet terpilih
+     - Validasi real-time 0-10 (Alpine.js)
+     - Tombol "Tambah End" dan "Selesai"
+7.3  Simpan ke tabel sesi + skor (1 sesi per atlet, banyak end)
+7.4  Hitung total_skor di sesi setelah selesai
+7.5  Catat log_skor jika ada perubahan (admin only)
+7.6  Halaman riwayat input sendiri
+
+--------------------------------------------------------------------------------
+TAHAP 8: HALAMAN ATLET
+--------------------------------------------------------------------------------
+8.1  Dashboard atlet (skor terbaru, total latihan)
+8.2  Riwayat skor (tabel lengkap dengan filter tanggal/event)
+8.3  Grafik performa (Chart.js line chart)
+8.4  Edit profil atlet
+8.5  Ekspor data pribadi (PDF, Excel, Word)
+
+--------------------------------------------------------------------------------
+TAHAP 9: HALAMAN PELATIH
+--------------------------------------------------------------------------------
+9.1  Dashboard pelatih (statistik umum)
+9.2  CRUD Atlet (mirip admin, tapi tidak bisa kelola user lain)
+9.3  Analisis performa (grafik per atlet, per event)
+9.4  Ekspor laporan semua atlet (Excel, PDF)
+9.5  Manajemen event terbatas (index, edit, update)
+
+--------------------------------------------------------------------------------
+TAHAP 10: BACKUP & EKSPOR (5 FORMAT)
+--------------------------------------------------------------------------------
+10.1 BackupService:
+     - toJson()   : full database + per-tabel
+     - toPdf()    : laporan resmi
+     - toDocx()   : dokumen editable
+     - toXlsx()   : analisis data
+     - toTxt()    : backup ringan
+10.2 Restore dari JSON
+10.3 Riwayat backup (backup_log)
+10.4 Scheduler backup otomatis (harian/mingguan/bulanan)
+
+--------------------------------------------------------------------------------
+TAHAP 11: LOG & SECURITY
+--------------------------------------------------------------------------------
+11.1 LogAktivitasMiddleware (auto-log request penting)
+11.2 LogService (wrapper pencatatan log)
+11.3 Semua controller pakai Form Request untuk validasi
+11.4 Semua query pakai Eloquent (prepared statement otomatis)
+11.5 CSRF protection aktif di semua form
+
+--------------------------------------------------------------------------------
+TAHAP 12: TESTING & POLISH
+--------------------------------------------------------------------------------
+12.1 Test registrasi token (valid & invalid)
+12.2 Test input skor multi-atlet
+12.3 Test validasi real-time 0-10
+12.4 Test backup & restore
+12.5 Responsive testing (mobile, tablet, desktop)
+12.6 Pastikan TIDAK ADA gradient di CSS
+12.7 Pastikan warna hijau solid konsisten
+
+================================================================================
+CATATAN AKHIR UNTUK AI AGENT
+================================================================================
+- JANGAN pakai Breeze/Jetstream/Fortify untuk auth
+- JANGAN pakai gradient di CSS manapun
+- JANGAN ambil data atlet dari role selain 'atlet' untuk input skor
+- WAJIB pakai Blade layouting (@extends, @section, @yield, @push)
+- WAJIB pakai DaisyUI v4 (bukan v5) karena Tailwind v3
+- WAJIB catat log_skor setiap perubahan skor
+- WAJIB gunakan checkbox (bukan radio/dropdown) untuk multi-atlet
+- Ikuti struktur folder di file 03_folder-structure.txt
+- Ikuti routes di file 05_routes.txt
+- Ikuti schema DB di file 06_database-schema.txt
+================================================================================

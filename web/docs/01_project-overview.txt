@@ -1,0 +1,50 @@
+================================================================================
+PROJECT OVERVIEW — SISTEM DATA SKOR PANAHAN (ARCHERYPRO)
+================================================================================
+
+NAMA PROJECT   : ArcheryPro Scoring System
+FRAMEWORK      : Laravel 10 (PHP 8.1+)
+FRONTEND       : Tailwind CSS v3 + DaisyUI v4 + Alpine.js
+DATABASE       : MySQL 8 / MariaDB 10.4+
+BUILD TOOL     : Vite
+AUTH           : CUSTOM (BUKAN Breeze, BUKAN Jetstream, BUKAN Fortify)
+LAYOUTING      : Blade Layouting (layouts/app.blade.php, layouts/public.blade.php)
+TARGET         : Single club/instansi panahan
+DESAIN VISUAL  : HIJAU SOLID (TIDAK BOLEH GRADIENT)
+
+--------------------------------------------------------------------------------
+TUJUAN UTAMA
+--------------------------------------------------------------------------------
+1. Digitalisasi pencatatan skor panahan (hilangkan pencatatan manual)
+2. Input skor MULTI-ATLET dalam satu sesi (checkbox, bukan single select)
+3. Monitoring performa atlet jangka panjang (grafik Chart.js)
+4. Transparansi data via log aktivitas & log perubahan skor
+5. Backup & ekspor multi-format (JSON, PDF, DOCX, XLSX, TXT)
+
+--------------------------------------------------------------------------------
+ROLE PENGGUNA (5 ROLE)
+--------------------------------------------------------------------------------
+| Role          | Registrasi       | Akses Utama                              |
+|---------------|------------------|------------------------------------------|
+| Admin         | Seeder/DB only   | Full access, manajemen sistem            |
+| Pelatih       | Token PELATIH2025| CRUD atlet, analisis performa, ekspor    |
+| Scoring       | Token SKORING2025| Input skor multi-atlet, riwayat sendiri  |
+| Atlet         | Tanpa token      | Skor pribadi, grafik, ekspor pribadi     |
+| Publik        | Tanpa login      | Hasil event yang dipublikasikan          |
+
+--------------------------------------------------------------------------------
+ATURAN KRITIS (WAJIB DIPATUHI)
+--------------------------------------------------------------------------------
+[X] Data atlet untuk input skor HARUS dari users.role = 'atlet'
+    (BUKAN scoring, BUKAN pelatih, BUKAN admin)
+[X] Input skor = MULTI-ATLET pakai CHECKBOX (bukan radio/dropdown)
+[X] Validasi real-time skor 0-10 per anak panah
+[X] 1 end = 6 anak panah (bisa dikonfigurasi di pengaturan_sistem)
+[X] Setiap perubahan skor WAJIB tercatat di log_skor
+[X] Sistem "klub" diganti "sekolah" (1 club, banyak asal sekolah)
+[X] Desain visual: HIJAU SOLID (#2E7D32 / #388E3C / #4CAF50)
+[X] TIDAK BOLEH menggunakan warna gradient
+[X] Auth CUSTOM, bukan Breeze/Jetstream/Fortify
+[X] Semua halaman pakai Blade Layouting (@extends, @section, @yield)
+
+================================================================================

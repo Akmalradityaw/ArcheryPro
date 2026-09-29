@@ -1,0 +1,138 @@
+================================================================================
+STRATEGI BLADE LAYOUTING
+================================================================================
+
+--------------------------------------------------------------------------------
+A. LAYOUT UTAMA (layouts/app.blade.php)
+--------------------------------------------------------------------------------
+Digunakan untuk: Admin, Pelatih, Scoring, Atlet (yang sudah login)
+
+Struktur:
+    <!DOCTYPE html>
+    <html lang="id" data-theme="archery">
+    <head>
+        @include('layouts.partials.head')
+        @stack('styles')
+    </head>
+    <body class="bg-base-200 min-h-screen">
+        <div class="drawer lg:drawer-open">
+            <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+            <div class="drawer-content flex flex-col">
+                @include('layouts.partials.navbar')
+                @include('layouts.partials.alert')
+                <main class="p-4 lg:p-6 flex-1">
+                    @yield('content')
+                </main>
+                @include('layouts.partials.footer')
+            </div>
+
+            <div class="drawer-side">
+                @include('layouts.partials.sidebar')
+            </div>
+        </div>
+
+        <script src="{{ asset('build/app.js') }}"></script>
+        @stack('scripts')
+    </body>
+    </html>
+
+--------------------------------------------------------------------------------
+B. LAYOUT PUBLIK (layouts/public.blade.php)
+--------------------------------------------------------------------------------
+Digunakan untuk: Beranda, Hasil Event (tanpa login)
+
+Struktur:
+    <!DOCTYPE html>
+    <html lang="id" data-theme="archery">
+    <head>
+        @include('layouts.partials.head')
+        @stack('styles')
+    </head>
+    <body class="bg-base-100 min-h-screen flex flex-col">
+        <nav class="navbar bg-primary text-primary-content">
+            <!-- Logo ArcheryPro + menu publik -->
+        </nav>
+        <main class="flex-1">
+            @yield('content')
+        </main>
+        <footer class="footer bg-neutral text-neutral-content p-10">
+            <!-- Info club, kontak -->
+        </footer>
+        <script src="{{ asset('build/app.js') }}"></script>
+        @stack('scripts')
+    </body>
+    </html>
+
+--------------------------------------------------------------------------------
+C. LAYOUT AUTH (layouts/auth.blade.php)
+--------------------------------------------------------------------------------
+Digunakan untuk: Login, Register Atlet, Register Pelatih, Register Scoring
+
+Struktur:
+    <!DOCTYPE html>
+    <html lang="id" data-theme="archery">
+    <head>
+        @include('layouts.partials.head')
+    </head>
+    <body class="bg-base-200 min-h-screen flex items-center justify-center">
+        <div class="card w-full max-w-md bg-base-100 shadow-xl">
+            <div class="card-body">
+                <h1 class="card-title text-primary">ArcheryPro</h1>
+                @yield('content')
+            </div>
+        </div>
+        <script src="{{ asset('build/app.js') }}"></script>
+    </body>
+    </html>
+
+--------------------------------------------------------------------------------
+D. CONTOH PENGGUNAAN DI VIEW
+--------------------------------------------------------------------------------
+
+resources/views/admin/dashboard.blade.php:
+    @extends('layouts.app')
+
+    @section('title', 'Dashboard Admin')
+
+    @section('content')
+        <h1>Dashboard Admin</h1>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <x-card-stat title="Total Atlet" :value="$totalAtlet" />
+        </div>
+    @endsection
+
+    @push('scripts')
+        <script>...</script>
+    @endpush
+
+--------------------------------------------------------------------------------
+E. SIDEBAR DINAMIS PER ROLE
+--------------------------------------------------------------------------------
+layouts/partials/sidebar.blade.php memuat menu berbeda berdasarkan role:
+
+    @auth
+        @if(auth()->user()->hasRole('admin'))
+            @include('layouts.partials.menu-admin')
+        @elseif(auth()->user()->hasRole('pelatih'))
+            @include('layouts.partials.menu-pelatih')
+        @elseif(auth()->user()->hasRole('scoring'))
+            @include('layouts.partials.menu-scoring')
+        @elseif(auth()->user()->hasRole('atlet'))
+            @include('layouts.partials.menu-atlet')
+        @endif
+    @endauth
+
+--------------------------------------------------------------------------------
+F. COMPONENT BLADE YANG WAJIB DIBUAT
+--------------------------------------------------------------------------------
+1. x-card-stat           -> card statistik dashboard
+2. x-btn-primary         -> tombol hijau solid konsisten
+3. x-table-empty         -> placeholder tabel kosong
+4. x-modal-confirm       -> modal konfirmasi hapus
+5. x-input-error         -> pesan error validasi
+6. x-alert               -> alert flash message (success/error/warning)
+7. x-badge-status        -> badge status event/atlet
+8. x-checkbox-atlet      -> checkbox multi-atlet khusus scoring
+
+================================================================================

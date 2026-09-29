@@ -1,0 +1,177 @@
+================================================================================
+STRUKTUR DATABASE (11 TABEL UTAMA)
+================================================================================
+
+--------------------------------------------------------------------------------
+1. users
+--------------------------------------------------------------------------------
+id              BIGINT UNSIGNED PK AUTO
+username        VARCHAR(50) UNIQUE NOT NULL
+password        VARCHAR(255) NOT NULL (hashed)
+email           VARCHAR(100) NULL
+role            ENUM('admin','pelatih','scoring','atlet') DEFAULT 'atlet'
+                CATATAN: role di sini hanya untuk kemudahan query
+                         permission detail tetap pakai spatie/laravel-permission
+token           VARCHAR(100) NULL (untuk registrasi pelatih/scoring)
+created_at      TIMESTAMP DEFAULT CURRENT
+updated_at      TIMESTAMP NULL
+
+INDEX: username, email, role
+
+--------------------------------------------------------------------------------
+2. sekolah
+--------------------------------------------------------------------------------
+id              BIGINT UNSIGNED PK AUTO
+nama_sekolah    VARCHAR(100) UNIQUE NOT NULL
+alamat          TEXT NULL
+kota            VARCHAR(50) NULL
+created_at      TIMESTAMP DEFAULT CURRENT
+updated_at      TIMESTAMP NULL
+
+--------------------------------------------------------------------------------
+3. kategori
+--------------------------------------------------------------------------------
+id                   BIGINT UNSIGNED PK AUTO
+nama_kategori        VARCHAR(50) NOT NULL (Recurve/Compound/Traditional/Barebow)
+jarak_tempuh         INT NOT NULL (dalam meter: 20, 30, 50)
+jumlah_panah_per_end INT DEFAULT 6
+created_at           TIMESTAMP DEFAULT CURRENT
+updated_at           TIMESTAMP NULL
+
+--------------------------------------------------------------------------------
+4. atlet
+--------------------------------------------------------------------------------
+id                    BIGINT UNSIGNED PK AUTO
+user_id               BIGINT UNSIGNED FK -> users.id ON DELETE CASCADE
+nia                   VARCHAR(20) UNIQUE NOT NULL (Nomor Induk Atlet)
+nama_lengkap          VARCHAR(100) NOT NULL
+tempat_lahir          VARCHAR(50) NULL
+tanggal_lahir         DATE NULL
+jenis_kelamin         ENUM('L','P') NULL
+sekolah_id            BIGINT UNSIGNED FK -> sekolah.id ON DELETE SET NULL
+kelas                 VARCHAR(20) NULL
+no_telepon            VARCHAR(15) NULL
+nama_orangtua         VARCHAR(100) NULL
+no_telepon_orangtua   VARCHAR(15) NULL
+alamat                TEXT NULL
+kategori_id           BIGINT UNSIGNED FK -> kategori.id ON DELETE SET NULL
+golongan_darah        VARCHAR(5) NULL
+riwayat_cedera        TEXT NULL
+alergi                TEXT NULL
+status                ENUM('aktif','tidak_aktif') DEFAULT 'aktif'
+created_at            TIMESTAMP DEFAULT CURRENT
+updated_at            TIMESTAMP NULL
+
+INDEX: user_id, nia, sekolah_id, kategori_id, status
+
+--------------------------------------------------------------------------------
+5. event
+--------------------------------------------------------------------------------
+id              BIGINT UNSIGNED PK AUTO
+nama_event      VARCHAR(100) NOT NULL
+tanggal         DATE NOT NULL
+lokasi          VARCHAR(100) NULL
+status          ENUM('draft','berlangsung','selesai') DEFAULT 'draft'
+is_publik       BOOLEAN DEFAULT 0
+created_by      BIGINT UNSIGNED FK -> users.id ON DELETE SET NULL
+created_at      TIMESTAMP DEFAULT CURRENT
+updated_at      TIMESTAMP NULL
+
+INDEX: status, is_publik, tanggal
+
+--------------------------------------------------------------------------------
+6. sesi
+--------------------------------------------------------------------------------
+id              BIGINT UNSIGNED PK AUTO
+event_id        BIGINT UNSIGNED FK -> event.id ON DELETE SET NULL (nullable)
+atlet_id        BIGINT UNSIGNED FK -> atlet.id ON DELETE CASCADE
+tanggal_sesi    DATE NOT NULL
+total_skor      INT DEFAULT 0
+created_by      BIGINT UNSIGNED FK -> users.id (petugas scoring)
+created_at      TIMESTAMP DEFAULT CURRENT
+updated_at      TIMESTAMP NULL
+
+INDEX: event_id, atlet_id, tanggal_sesi, created_by
+
+--------------------------------------------------------------------------------
+7. skor  (per end, default 6 panah)
+--------------------------------------------------------------------------------
+id              BIGINT UNSIGNED PK AUTO
+sesi_id         BIGINT UNSIGNED FK -> sesi.id ON DELETE CASCADE
+end_ke          INT NOT NULL (urutan end)
+skor1           TINYINT NOT NULL (0-10)
+skor2           TINYINT NOT NULL (0-10)
+skor3           TINYINT NOT NULL (0-10)
+skor4           TINYINT NOT NULL (0-10)
+skor5           TINYINT NOT NULL (0-10)
+skor6           TINYINT NOT NULL (0-10)
+total_end       SMALLINT NOT NULL (sum skor1..skor6)
+created_at      TIMESTAMP DEFAULT CURRENT
+updated_at      TIMESTAMP NULL
+
+INDEX: sesi_id, end_ke
+CATATAN: struktur ini fix 6 kolom. Kalau jumlah_panah_per_end berubah,
+         tetap 6 kolom, sisanya diisi 0.
+
+--------------------------------------------------------------------------------
+8. log_skor  (riwayat perubahan skor)
+--------------------------------------------------------------------------------
+id              BIGINT UNSIGNED PK AUTO
+skor_id         BIGINT UNSIGNED FK -> skor.id ON DELETE CASCADE
+user_id         BIGINT UNSIGNED FK -> users.id (yang mengubah)
+perubahan       TEXT NOT NULL (deskripsi)
+data_lama       JSON NULL
+data_baru       JSON NULL
+waktu           TIMESTAMP DEFAULT CURRENT
+
+INDEX: skor_id, user_id, waktu
+
+--------------------------------------------------------------------------------
+9. backup_log
+--------------------------------------------------------------------------------
+id              BIGINT UNSIGNED PK AUTO
+user_id         BIGINT UNSIGNED FK -> users.id
+jenis_backup    VARCHAR(50) NOT NULL (full/atlet/event/skor/dll)
+format          ENUM('json','pdf','docx','xlsx','txt') NOT NULL
+ukuran_file     VARCHAR(20) NULL (dalam KB/MB)
+lokasi_file     VARCHAR(255) NULL (path penyimpanan)
+created_at      TIMESTAMP DEFAULT CURRENT
+
+--------------------------------------------------------------------------------
+10. log_aktivitas
+--------------------------------------------------------------------------------
+id              BIGINT UNSIGNED PK AUTO
+user_id         BIGINT UNSIGNED FK -> users.id ON DELETE SET NULL (nullable)
+aktivitas       VARCHAR(255) NOT NULL
+ip_address      VARCHAR(45) NULL
+user_agent      TEXT NULL
+waktu           TIMESTAMP DEFAULT CURRENT
+
+INDEX: user_id, waktu
+
+--------------------------------------------------------------------------------
+11. pengaturan_sistem
+--------------------------------------------------------------------------------
+id              BIGINT UNSIGNED PK AUTO
+key_setting     VARCHAR(50) UNIQUE NOT NULL
+value_setting   TEXT NOT NULL
+keterangan      TEXT NULL
+updated_at      TIMESTAMP DEFAULT CURRENT ON UPDATE
+
+DATA DEFAULT:
+- token_pelatih         = "PELATIH2025"
+- token_scoring         = "SKORING2025"
+- jumlah_panah_per_end  = "6"
+- backup_otomatis       = "harian"  (harian/mingguan/bulanan/off)
+- backup_path           = "storage/app/backups/"
+
+--------------------------------------------------------------------------------
+TABEL TAMBAHAN (dari spatie/laravel-permission)
+--------------------------------------------------------------------------------
+- roles
+- permissions
+- model_has_roles
+- model_has_permissions
+- role_has_permissions
+
+================================================================================
