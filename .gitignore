@@ -70,3 +70,7 @@ service-account.json
 # local push logs
 push*.log
 push*.sh.bak
+
+# local push logs
+push*.log
+push*.sh.bak
